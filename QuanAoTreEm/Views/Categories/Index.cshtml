@@ -1,0 +1,27 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model List<QuanAoTreEm.Models.Category>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="col-3 bg-white me-3" style="height: 100vh; border-radius: 10px;">
+        <h5>Danh mục</h5>
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item">
+                    <a href="@Url.Action("GetProductByCategory", "Product", new { categoryId = item.CategoryID})" class="text-decoration-none">@item.CategoryName</a>
+                </li>
+            }
+        </ul>
+    </div>
+</body>
+</html>

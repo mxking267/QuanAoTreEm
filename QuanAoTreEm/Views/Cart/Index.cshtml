@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            var quantityInput = $('#quantity');
+
+            $('#increase').on('click', function () {
+                var currentValue = parseInt(quantityInput.val(), 10);
+                quantityInput.val(currentValue + 1);
+            });
+
+            $('#decrease').on('click', function () {
+                var currentValue = parseInt(quantityInput.val(), 10);
+                if (currentValue > 1) {
+                    quantityInput.val(currentValue - 1);
+                }
+            });
+        });
+    </script>
+}
+
+
+<h2>Giỏ hàng</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Hình ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th><i class="fa-solid fa-trash-can"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td>Áo thun nam</td>
+            <td>85.000đ</td>
+            <td>
+                <div class="container mt-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button" id="decrease">-</button>
+                        </div>
+                        <input type="text" class="form-control text-center" style="width: 40px" id="quantity" value="1" readonly>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="increase">+</button>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td></td>
+            <td><i class="fa-solid fa-trash-can"></i></td>
+        </tr>
+    </tbody>
+</table>

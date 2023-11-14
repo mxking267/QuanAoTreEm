@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "ProductItem";
+}
+
+@model QuanAoTreEm.Models.Product
+
+<div class="row">
+    <div class="col-4 me-3">
+        @*Image*@
+        <div class="container">
+            <div class="row mb-3 overflow-hidden" style="height:150px">
+                <div class="col-md-12">
+                    <div id="mainImageContainer">
+                        <img id="mainImage" class="main-image" src="~/Content/Assets/Images/slide-1.jpg" alt="Main Image">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row thumbnail-container">
+                <div class="col-md-2">
+                    <img class="thumbnail" src="~/Content/Assets/Images/slide-1.jpg" alt="Thumbnail 1" onclick="changeImage(this)">
+                </div>
+                <div class="col-md-2">
+                    <img class="thumbnail" src="~/Content/Assets/Images/slide-2.jpg" alt="Thumbnail 2" onclick="changeImage(this)">
+                </div>
+                <div class="col-md-2">
+                    <img class="thumbnail" src="~/Content/Assets/Images/slide-3.jpg" alt="Thumbnail 3" onclick="changeImage(this)">
+                </div>
+                <!-- Add more thumbnails as needed -->
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col">
+        <h2>@Model.ProductName</h2>
+        <h4>@Convert.ToInt32(Model.Price)</h4>
+        <p>@Model.Description</p>
+        <button type="button" class="btn btn-danger">+ Thêm vào giỏ hàng</button>
+    </div>
+</div>
+<script>
+    function changeImage(smallImg) {
+        document.getElementById('mainImage').src = smallImg.src;
+    }
+</script>
+
