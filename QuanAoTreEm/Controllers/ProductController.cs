@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.DynamicData;
@@ -12,24 +13,32 @@ namespace QuanAoTreEm.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        Product product = new Product();
+        Product product;
         public ActionResult Index()
         {
-            List<Product> productList  = product.GetProducts();
-            
+            product = new Product();
+            List<Product> productList = product.GetProducts();
             return View(productList);
         }
 
         public ActionResult GetProductByCategory(int categoryId)
         {
+            product = new Product();
             List<Product> productList = product.GetProductsByCategoyID(categoryId);
+
             return View(productList);
         }
 
-        public ActionResult Detail(int productId)
+        public ActionResult Detail(int? productId)
         {
-            Product pr = product.GetProductByID(productId);
-            return View(pr);
+            product = new Product();
+            if (productId.HasValue)
+            {
+                Product pr = product.GetProductByID(productId);
+                ViewBag.Images = pr.GetImages(productId);
+                return View(pr);
+            }
+            return RedirectToAction("Index", "Product");
         }
 
 

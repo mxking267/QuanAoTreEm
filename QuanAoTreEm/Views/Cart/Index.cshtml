@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model List<QuanAoTreEm.Models.CartItem>
 @section scripts {
     <script>
         $(document).ready(function () {
@@ -25,37 +26,25 @@
 
 
 <h2>Giỏ hàng</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Hình ảnh</th>
-            <th>Tên sản phẩm</th>
-            <th>Đơn giá</th>
-            <th>Số lượng</th>
-            <th>Thành tiền</th>
-            <th><i class="fa-solid fa-trash-can"></i></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-            <td>Áo thun nam</td>
-            <td>85.000đ</td>
-            <td>
-                <div class="container mt-4">
+<div class="d-flex flex-column container align-items-center">
+    @foreach (var item in Model)
+    {
+
+        <div class="row d-flex g-3 align-items-center" style="width: 100%;padding: 16px">
+            <div class="col-1 me-3"><img style="width:80px; height: 80px; object-fit: cover" src="~/Content/Assets/Images/Product/@item.ImagePath" /></div>
+            <div class="col-3 me-3">@item.ProductName</div>
+            <div class="col-1 me-3">@Convert.ToInt32(item.Price)đ</div>
+            <div class="col-3 me-3">
+                <div class="container">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary" type="button" id="decrease">-</button>
-                        </div>
-                        <input type="text" class="form-control text-center" style="width: 40px" id="quantity" value="1" readonly>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="increase">+</button>
-                        </div>
+                        <button class="btn btn-outline-secondary" style="border-radius: 0" type="button" id="decrease">-</button>
+                        <input type="text" class="form-control text-center" style="border-radius: 0" id="quantity" value="@item.Quantity" readonly>
+                        <button class="btn btn-outline-secondary" style="border-radius: 0" type="button" id="increase">+</button>
                     </div>
                 </div>
-            </td>
-            <td></td>
-            <td><i class="fa-solid fa-trash-can"></i></td>
-        </tr>
-    </tbody>
-</table>
+            </div>
+            <div class="col-1 me-3 fw-bold" style="color: red">@item.GetPriceByQuantity()đ</div>
+            <div class="col-1 me-3"><a href="@Url.Action("DeleteItem", "Cart", new { productId = item.ProductID})"><i class="fa-solid fa-trash-can"></i></a></div>
+        </div>
+    }
+</div>

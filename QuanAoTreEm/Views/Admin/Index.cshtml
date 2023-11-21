@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@model List<QuanAoTreEm.Models.Product>
+
+
+
+<style>
+
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* hoặc justify-content: space-around; */
+    }
+
+    .flex-item {
+        width: calc(20% - 8px);
+        margin-bottom: 16px;
+        background-color: #ddd;
+        padding: 8px;
+    }
+
+    .products-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 10px;
+    }
+
+    .products-add {
+        align-items: center;
+        display: flex;
+        gap: 10px;
+    }
+</style>
+<div class="products-header">
+    <h2>All Products</h2>
+    <a href="/Admin/Create" class="btn btn-dark products-add text-decoration-none" style="height: fit-content"><i class="fa-solid fa-plus" style="padding: 10px; border-radius: 100px; border: 1px solid #fff"></i> Add a product</a>
+</div>
+<div class="flex-container bg-white">
+    @foreach (var item in Model)
+    {
+        <a class="flex-item text-decoration-none bg-white" href="/Admin/Detail/@item.ProductID">
+            @{Html.RenderAction("ProductPartial", "Admin", item);}
+        </a>
+    }
+</div>
+

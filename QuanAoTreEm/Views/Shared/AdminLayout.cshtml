@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SB Admin 2 - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+
+        *{
+            max-width: none;
+        }
+
+        input, textarea, select{
+            max-width:none !important;
+        }
+
+        .admin-container {
+            height: 100vh;
+        }
+
+        .admin-header {
+            height: 100px;
+            border-bottom: 1px solid #333;
+        }
+
+        .admin-menu {
+            border-right: 1px solid #333;
+        }
+
+        .nav-brand {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 10px;
+            padding-bottom: 40px;
+            line-height: 100px;
+        }
+
+        .nav-action-group {
+            padding: 0;
+        }
+
+        .nav-action-item {
+            list-style-type: none;
+            font-weight: bold;
+            padding: 10px 20px;
+        }
+
+            .nav-action-item:hover {
+                background-color: #333;
+                color: white;
+                border-radius: 10px;
+                cursor: pointer;
+            }
+
+        .nav-categories-btn {
+            border: none;
+            background-color: transparent;
+            text-align: left;
+            width: 100%;
+            font-weight: bold;
+            padding-left: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .item {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        #myList {
+            padding: 0;
+        }
+
+            #myList > li {
+                list-style-type: none;
+                font-weight: 500;
+            }
+
+        .header-action-container {
+            display: flex;
+            padding: 30px 40px;
+            align-items: center;
+            justify-content: end;
+            gap: 20px;
+            height: 100px;
+        }
+
+        .header-search {
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="row  admin-container">
+        <div class="col-2 admin-menu">
+            <div class="nav-brand">ADMIN</div>
+            <ul class="nav-action-group">
+                <li class="nav-action-item">ALL PRODUCT</li>
+                <li class="nav-action-item">ACCOUNT</li>
+            </ul>
+            <button id="toggleButton" class="nav-categories-btn">CATEGORIES<i class="fa-solid fa-chevron-down"></i></button>
+            <ul id="myList" class="hidden">
+                <li class="item">Item 1</li>
+                <li class="item">Item 2</li>
+                <li class="item">Item 3</li>
+            </ul>
+        </div>
+        <div class="col-10">
+            <div class="row admin-header">
+                <div class="header-action-container">
+                    <div class="input-group header-search">
+                        <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-dark" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+
+                    <i class="fa-solid fa-bell"></i>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+            <div class="row h-100 d-flex">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    @Html.Raw("<script src=\"https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js\" integrity=\"sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r\" crossorigin=\"anonymous\"></script>")
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById("toggleButton").addEventListener("click", function () {
+            var myList = document.getElementById("myList");
+            var items = document.querySelectorAll(".item");
+
+            if (myList.style.display === "none" || myList.style.display === "") {
+                myList.style.display = "block"; // Hiển thị thẻ ul
+
+                // Áp dụng hiệu ứng cho từng item
+                items.forEach(function (item, index) {
+                    setTimeout(function () {
+                        item.style.opacity = "1";
+                        item.style.transform = "translateY(0)";
+                    }, index * 200); // 200ms là khoảng thời gian giữa mỗi item xuất hiện
+                });
+            } else {
+                // Ẩn thẻ ul và đảo ngược hiệu ứng cho từng item
+                items.forEach(function (item, index) {
+                    item.style.opacity = "0";
+                    item.style.transform = "translateY(-20px)";
+                });
+                myList.style.display = "none";
+            }
+        });
+
+
+    </script>
+</body>
+</html>

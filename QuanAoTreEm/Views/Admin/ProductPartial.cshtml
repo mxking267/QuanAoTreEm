@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+@model QuanAoTreEm.Models.Product
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ProductPartial</title>
+    <style>
+
+        
+        .card {
+            position: relative;
+            display: flex;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .card-head {
+            display: flex;
+        }
+
+        .card-head-title {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            margin-left: 15px;
+        }
+
+        .card-img-top {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .clamp-text {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2; /* Số dòng tối đa */
+            max-height: 3em; /* Chiều cao tối đa tương đương với 3 dòng */
+        }
+
+    </style>
+</head>
+<body>
+    
+    
+    <div class="card flex-item bg-white" style="width: 18rem;">
+        <div class="card-head">
+            <img src="~/Content/Assets/Images/Product/@Model.ImagePath" class="card-img-top" alt="...">
+            <div class="card-head-title">
+                <h5 class="card-name clamp-text">@Model.ProductName</h5>
+                <span class="card-categories">@Model.CategoryID</span>
+                <h5 class="card-price">@Model.Price</h5>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

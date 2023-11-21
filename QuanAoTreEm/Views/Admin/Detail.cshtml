@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    List<QuanAoTreEm.Models.Category> listCategories = ViewBag.listCategories as List<QuanAoTreEm.Models.Category>;
+}
+@model QuanAoTreEm.Models.Product
+
+<div class="d-flex flex-column" style="background: #ccc; padding: 20px 50px; height: 100%">
+    <h2>Detail</h2>
+
+    @if (ViewBag.UpdateMessage != null)
+    {
+        <div id="toast" style="position: absolute;display: block" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Thông báo</strong>
+                <small>Vừa xong</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                @ViewBag.UpdateMessage
+            </div>
+        </div>
+    }
+
+
+    <form style=" border-radius: 15px; background: white; padding: 20px;" class="row w-100" method="post" enctype="multipart/form-data" action="@Url.Action("Update", "Admin")">
+        <div class="col">
+            <div class="mb-3 col">
+                <input type="hidden" value="@Model.ProductID" name="ProductID" />
+                <label for="exampleFormControlInput1" class="form-label">Tên sản phẩm</label>
+                <input type="text" name="ProductName" class="form-control" id="exampleFormControlInput1" value="@Model.ProductName">
+            </div>
+            <div class="mb-3 col">
+                <label for="exampleFormControlTextarea1" class="form-label">Mô tả sản phẩm</label>
+                <textarea class="form-control" name="Description" id="exampleFormControlTextarea1" rows="3">@Model.Description</textarea>
+            </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col">
+                        <label for="categories" class="form-label">Danh mục sản phẩm</label>
+                        <select class="form-control dropdown dropdown-toggle" id="categories" data-value="@Model.CategoryID" name="CategoryID">
+                            @foreach (var item in listCategories)
+                            {
+                                <option @(item.CategoryID == Model.CategoryID ? "selected" : "") value="@item.CategoryID">@item.CategoryName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="price" class="form-label">Giá</label>
+                        <input type="number" class="form-control" id="price" name="Price" value="@Model.Price">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <input type="file" style="height: 50px" id="file-input" accept="image/*">
+            <div id="image-container">
+                @foreach (var item in Model.GetImages(Model.ProductID))
+                {
+                    <div class="uploaded-image d-flex align-items-center mb-3">
+                        <img style="width: 50px" class="me-3" src="~/Content/Assets/Images/Product/@item" />
+                        <span class="me-3">@item</span>
+                    </div>
+                }
+            </div>
+
+        </div>
+        <div class="d-flex mt-3 justify-content-end" style="gap: 10px;">
+            <button type="submit" class="btn btn-dark ps-4 pe-4">Lưu</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Xoá
+            </button>
+            <button onclick="goBack()" type="button" class="btn btn-outline-dark ps-4 pe-4">Huỷ</button>
+        </div>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Xác nhận xoá?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                    <a href="/Admin/Delete/@Model.ProductID" class="btn btn-primary text-decoration-none">Xoá</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('file-input').addEventListener('change', handleFileUpload);
+
+    function handleFileUpload(event) {
+        const fileInput = event.target;
+        const files = fileInput.files;
+
+        const imageContainer = document.getElementById('image-container');
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const imageUrl = e.target.result;
+
+                // Tạo thẻ div để chứa ảnh và tên
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'uploaded-image d-flex align-items-center';
+
+                // Tạo thẻ hình ảnh
+                const imgElement = document.createElement('img');
+                imgElement.width = 50;
+                imgElement.className = 'me-3'
+                imgElement.src = imageUrl;
+
+                // Tạo thẻ tên
+                const fileNameElement = document.createElement('span');
+                fileNameElement.textContent = file.name;
+                fileNameElement.className = 'me-3'
+
+                // Gắn ảnh và tên vào thẻ div
+                imageDiv.appendChild(imgElement);
+                imageDiv.appendChild(fileNameElement);
+
+                // Hiển thị thẻ div trong khu vực hiển thị ảnh
+                imageContainer.appendChild(imageDiv);
+            };
+
+            // Đọc file hình ảnh dưới dạng URL Data
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function removeParentDiv(buttonElement) {
+        // Lấy đối tượng cha (thẻ div) của nút được nhấn
+        var parentDiv = buttonElement.parentNode;
+
+        // Gọi phương thức remove() để xóa thẻ div
+        parentDiv.remove();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var toast = new bootstrap.Toast(document.getElementById('toast'));
+
+        // Hiển thị toast
+        toast.show();
+
+        // Khi button close được nhấn, ẩn toast
+        document.querySelector('#toast .btn-close').addEventListener('click', function () {
+            toast.hide();
+        });
+
+        // Tự động ẩn toast sau 5 giây
+        setTimeout(function () {
+            toast.hide();
+        }, 5000);
+    });
+
+    function goBack() {
+        // Sử dụng JavaScript để quay lại trang trước đó
+        window.history.back();
+    }
+
+</script>
+
+

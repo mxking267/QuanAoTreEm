@@ -1,106 +1,77 @@
 ﻿@model QuanAoTreEm.Models.Account
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<div class="container vh-100" style="background-color: #f5f5fa">
+    <h4 class="pt-5">Thông tin tài khoản</h4>
+    <form class="form-control border-0" style="border-radius: 10px">
+        <div class="row p-3">
+            <div class="col-3 border-end border-1 border-dark me-5 d-flex justify-content-center">
+                <img style="width: 150px; height: 150px; border-radius: 50%; object-fit:cover" src="~/Content/Assets/Images/Users/@Model.ProfileImage" />
+            </div>
+            <div class="col" style="width: max-content">
+                @*Họ tên*@
+                <div class="row g-3 align-items-center mb-5">
+                    <div class="col-2">
+                        <label for="fullName" class="col-form-label">Họ và tên</label>
+                    </div>
+                    <div class="col">
+                        <input type="text" id="fullName" class="form-control w-100" aria-describedby="fullNameHelp" value="@Model.FullName">
+                    </div>
+                </div>
+                @*Số điện thoại*@
+                <div class="row g-3 align-items-center mb-5">
+                    <div class="col-2">
+                        <label for="phoneNumber" class="col-form-label">Số điện thoại</label>
+                    </div>
+                    <div class="col">
+                        <input type="number" id="phoneNumber" class="form-control" value="@Model.PhoneNumber">
+                    </div>
+                </div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Profile</title>
-</head>
-<body>
-    <div>
-        <h4>Account</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.UserID)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.UserID)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Username)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Username)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Password)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Password)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.FullName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.FullName)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Address)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Address)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateOfBirth)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Gender)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Gender)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Role)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Role)
-            </dd>
-    
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+                @*Địa chỉ email*@
+                <div class="row g-3 align-items-center mb-5">
+                    <div class="col-2">
+                        <label for="email" class="col-form-label">Email</label>
+                    </div>
+                    <div class="col">
+                        <input type="email" id="email" class="form-control" value="@Model.Email">
+                    </div>
+                </div>
+
+                @*Ngày sinh*@
+                <div class="row g-3 align-items-center mb-5">
+                    <div class="col-2">
+                        <label for="dateOfBirth" class="col-form-label">Ngày sinh</label>
+                    </div>
+                    <div class="col">
+                        <input type="date" id="dateOfBirth" class="form-control" value="@Model.DateOfBirth">
+                    </div>
+                </div>
+
+                @*Giới tính*@
+                <div class="row mb-3">
+                    <div class="col-2">
+                        <label for="" class="form-label">Giới tính</label>
+                    </div>
+                    <div class="col">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="gender_male" value="Nam">
+                            <label class="form-check-label" for="gender_male">Nam</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Nữ">
+                            <label class="form-check-label" for="gender_female">Nữ</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+

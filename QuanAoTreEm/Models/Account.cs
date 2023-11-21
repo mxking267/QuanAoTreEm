@@ -23,7 +23,7 @@ namespace QuanAoTreEm.Models
         public DateTime? DateOfBirth { get; set; }
         public string Gender { get; set; }
         public string Role { get; set; }
-        public byte[] ProfileImage { get; set; }
+        public string ProfileImage { get; set; }
 
         // Constructor mặc định
         public Account()
@@ -42,7 +42,7 @@ namespace QuanAoTreEm.Models
         // Constructor đầy đủ
         public Account(int? userId, string username, string password, string fullName, string email,
                        string phoneNumber, string address, DateTime? dateOfBirth, string gender,
-                       string role, byte[] profileImage)
+                       string role, string profileImage)
         {
             db = new Database();
             UserID = userId;
@@ -58,10 +58,10 @@ namespace QuanAoTreEm.Models
             ProfileImage = profileImage;
         }
 
-        public bool CheckSignIn(string username, string password)
+        public string CheckSignIn(string username, string password)
         {
-            string sql = $"Select * From Account Where Username = N'{username}' AND Password = '{password}'";
-            return !(db.Execute(sql).Rows.Count == 0);
+            string sql = $"Select UserID From Account Where Username = N'{username}' AND Password = '{password}'";
+            return db.Execute(sql).Rows[0][0].ToString();
         }
 
         public void AddUser(Account account)
@@ -89,9 +89,9 @@ namespace QuanAoTreEm.Models
             }
         }
 
-        public Account getUser(string username, string password)
+        public Account getUser(int? userID)
         {
-            string sql = $"Select * From Account Where Username = N'{username}' AND Password = '{password}'";
+            string sql = $"Select * From Account Where UserID = {userID}";
 
             return ConvertDataTableToAccount(db.Execute(sql));
         }
@@ -110,40 +110,12 @@ namespace QuanAoTreEm.Models
                 Address = row["Address"].ToString(),
                 DateOfBirth = DateTime.Parse(row["DateOfBirth"].ToString()),
                 Gender = row["Gender"].ToString(),
-                ProfileImage = ConvertVarbinaryToByteArray(row["ProfileImage"])
+                ProfileImage = row["ProfileImage"].ToString()
             };
 
             return account;
         }
 
-        private static byte[] ConvertVarbinaryToByteArray(object varbinaryObject)
-        {
-            if (varbinaryObject == null || varbinaryObject == DBNull.Value)
-            {
-                return null;
-            }
-
-            // Kiểm tra kiểu của đối tượng để đảm bảo nó là varbinary
-            if (varbinaryObject is byte[] byteArray)
-            {
-                return byteArray;
-            }
-
-            // Trường hợp đặc biệt nếu là MemoryStream
-            if (varbinaryObject is MemoryStream memoryStream)
-            {
-                return memoryStream.ToArray();
-            }
-
-            // Trường hợp khác có thể xử lý tùy thuộc vào kiểu đối tượng
-            // ...
-            if (varbinaryObject is System.Data.SqlTypes.SqlBytes sqlBytes)
-            {
-                return sqlBytes.Value;
-            }
-
-            return null;
-        }
 
     }
 }

@@ -39,6 +39,19 @@ namespace QuanAoTreEm.Models
             conn.Close();
         }
 
+        public object ExecuteScalar(string sql)
+        {
+            object result = null;
+
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                conn.Open();
+                result = cmd.ExecuteScalar();
+            }
+
+            conn.Close();
+            return result;
+        }
 
     }
 }

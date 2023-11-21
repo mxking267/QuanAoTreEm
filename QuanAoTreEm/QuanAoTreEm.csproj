@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -128,15 +129,38 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Assets\Images\slide-1.jpg" />
-    <Content Include="Content\Assets\Images\slide-2.jpg" />
-    <Content Include="Content\Assets\Images\slide-3.jpg" />
+    <Content Include="Content\Assets\Images\Product\bogau1.png" />
+    <Content Include="Content\Assets\Images\Product\bogau2.png" />
+    <Content Include="Content\Assets\Images\Product\bogau3.png" />
+    <Content Include="Content\Assets\Images\Product\default.jpg" />
+    <Content Include="Content\Assets\Images\Product\gaudau1.png" />
+    <Content Include="Content\Assets\Images\Product\gaudau2.png" />
+    <Content Include="Content\Assets\Images\Product\gaudau3.png" />
+    <Content Include="Content\Assets\Images\Product\gauganster1.png" />
+    <Content Include="Content\Assets\Images\Product\gauganster2.png" />
+    <Content Include="Content\Assets\Images\Product\gauganster3.png" />
+    <Content Include="Content\Assets\Images\Product\hoodieloang1.png" />
+    <Content Include="Content\Assets\Images\Product\hoodieloang2.png" />
+    <Content Include="Content\Assets\Images\Product\hoodieloang3.png" />
+    <Content Include="Content\Assets\Images\Product\jeanden.png" />
+    <Content Include="Content\Assets\Images\Product\jeanxanh.png" />
+    <Content Include="Content\Assets\Images\Slides\slider-1.png" />
+    <Content Include="Content\Assets\Images\Slides\slider-2.png" />
+    <Content Include="Content\Assets\Images\Slides\slider-3.png" />
+    <Content Include="Content\Assets\img\undraw_posting_photo.svg" />
+    <Content Include="Content\Assets\img\undraw_profile.svg" />
+    <Content Include="Content\Assets\img\undraw_profile_1.svg" />
+    <Content Include="Content\Assets\img\undraw_profile_2.svg" />
+    <Content Include="Content\Assets\img\undraw_profile_3.svg" />
+    <Content Include="Content\Assets\img\undraw_rocket.svg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -192,9 +216,16 @@
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Shared\AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ProductPartial.cshtml" />
+    <Content Include="Views\Admin\Detail.cshtml" />
+    <Content Include="Views\Admin\Update.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Assets\Images\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
