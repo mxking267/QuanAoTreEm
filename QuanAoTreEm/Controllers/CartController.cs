@@ -50,13 +50,50 @@ namespace QuanAoTreEm.Controllers
                 return RedirectToAction("SignIn", "Account");
             }
         }
-
         public ActionResult DeleteItem(int productID)
         {
             cart = new Cart();
             int? userId = Session["UserId"] as int?;
             cart.DeleteCartItem(userId.Value, productID);
             return RedirectToAction("Index", "Cart");
+        }
+
+        public ActionResult Update()
+        {
+
+            return RedirectToAction("Index", "Cart");
+        }
+
+        public ActionResult IncrementQuantity(int productId)
+        {
+            cart = new Cart();
+            // Xử lý tăng giá trị quantity trong database
+            // Cập nhật giá trị mới trong database
+            int userId =Convert.ToInt32(Session["UserId"]);
+            // Redirect về trang hiện tại sau khi xử lý
+            cart.Change(productId, userId, 1);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult DecrementQuantity(int productId)
+        {
+            cart = new Cart();
+            // Xử lý giảm giá trị quantity trong database
+            // Cập nhật giá trị mới trong database
+            int userId = Convert.ToInt32(Session["UserId"]);
+            // Redirect về trang hiện tại sau khi xử lý
+            if(cart.getCartItems(userId).Find(product => product.ProductID == productId).Quantity > 1)
+                cart.Change(productId, userId, -1);
+  
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult BadgeCart()
+        {
+            cart = new Cart();
+            int userId = Convert.ToInt32(Session["UserId"]);
+            ViewBag.Count = cart.getCartItems(userId).Count;
+            return View();
         }
     }
 }

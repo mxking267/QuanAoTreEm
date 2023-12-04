@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BadgeCart</title>
+</head>
+<body>
+    <a class="text-decoration-none btn btn-primary position-relative rounded-circle" style="display: flex; width: 24px; height: 24px; align-items: center; justify-content: center;" href="/Cart/Index">
+        <i class="fa-solid fa-cart-shopping " style="font-size: 16px"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge  bg-danger" style="border-radius: 50%; padding: 2px 4px">
+            @ViewBag.Count
+        </span>
+    </a>
+
+</body>
+</html>

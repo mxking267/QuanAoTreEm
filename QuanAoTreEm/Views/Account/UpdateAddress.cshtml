@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "UpdateAddress";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cập nhật địa chỉ</h2>
+<form class="bg-white" style="border-radius: 15px; padding: 20px">
+    <div class="mb-3 row">
+        <label for="fullname" class="col-sm-2 col-form-label">Họ và tên</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="fullname" placeholder="Họ và tên" required>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="phoneNumber" class="col-sm-2 col-form-label">Số điện thoại</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="phoneNumber" placeholder="Nhập số điện thoại" required>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="province" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
+        <div class="col-sm-10">
+            <input class="form-control" list="provinceDatalist" id="province" placeholder="Nhập để tìm kiếm" required>
+            <datalist id="provinceDatalist">
+                <option value="San Francisco">
+                <option value="New York">
+                <option value="Seattle">
+                <option value="Los Angeles">
+                <option value="Chicago">
+            </datalist>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="district" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
+        <div class="col-sm-10">
+            <input class="form-control" list="districtDatalist" id="district" placeholder="Nhập để tìm kiếm" required>
+            <datalist id="districtDatalist">
+                <option value="San Francisco">
+                <option value="New York">
+                <option value="Seattle">
+                <option value="Los Angeles">
+                <option value="Chicago">
+            </datalist>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="ward" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
+        <div class="col-sm-10">
+            <input class="form-control" list="wardDatalist" id="ward" placeholder="Nhập để tìm kiếm" required>
+            <datalist id="wardDatalist">
+                <option value="San Francisco">
+                <option value="New York">
+                <option value="Seattle">
+                <option value="Los Angeles">
+                <option value="Chicago">
+            </datalist>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="address" rows="3" placeholder="Nhập địa chỉ"></textarea>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <span style="visibility: hidden" class="col-sm-2"></span>
+        <div class="col-sm-10">
+            <a class="btn btn-primary" style="text-decoration: none; color: white; padding: 5px 70px">Lưu</a>
+        </div>
+    </div>
+
+
+</form>
+
+

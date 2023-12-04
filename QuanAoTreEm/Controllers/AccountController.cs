@@ -56,7 +56,6 @@ namespace QuanAoTreEm.Controllers
             account.FullName = fullname;
             account.PhoneNumber = phoneNumber;
             account.DateOfBirth = DateTime.Parse(birthday);
-            account.Address = address;
             account.Role = "User";
             account.Gender = gender;
             account.ProfileImage = fileName;
@@ -79,7 +78,20 @@ namespace QuanAoTreEm.Controllers
             if (!string.IsNullOrEmpty(account.CheckSignIn(f["username"], f["password"])))
             {
                 Session["UserId"] = int.Parse(account.CheckSignIn(f["username"], f["password"]).ToString());
-                return RedirectToAction("Profile", "Account");
+
+                if (account.getRole(f["username"], f["password"]) == "User")
+                {
+                    return RedirectToAction("Index", "Product");
+                }
+                else if (account.getRole(f["username"], f["password"]) == "Admin")
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                ViewBag.Message = "";
+            }
+            else
+            {
+                ViewBag.Message = "Sai tên đăng nhập hoặc mật khẩu";
             }
             return View();
         }
@@ -88,10 +100,48 @@ namespace QuanAoTreEm.Controllers
         {
             account = new Account();
             int? userId = Session["UserId"] as int?;
+            if (userId == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
             account = account.getUser(userId);
+            ViewBag.UserImage = account.ProfileImage;
             return View(account);
         }
 
+        public ActionResult Avatar()
+        {
+            account = new Account();
+            int? userId = Session["UserId"] as int?;
+            if (userId != null)
+            {
+                account = account.getUser(userId);
+                ViewBag.UserImage = account.ProfileImage;
+            }
+            return View();
+        }
 
+        public ActionResult SignOut()
+        {
+            Session["UserId"] = null;
+            return RedirectToAction("SignIn", "Account");
+        }
+
+        public ActionResult Address()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult AddAddress()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult UpdateAddress()
+        {
+            return View();
+        }
     }
 }

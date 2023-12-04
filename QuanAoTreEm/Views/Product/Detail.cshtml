@@ -6,7 +6,7 @@
 
 @model QuanAoTreEm.Models.Product
 
-<div class="row">
+<div class="row bg-white m-0" style="border-radius: 10px; padding: 10px 20px">
     <div class="col-4 me-3">
         @*Image*@
         @if (images != null && images.Any())
@@ -38,7 +38,9 @@
     </div>
     <div class="col">
         <h2>@Model.ProductName</h2>
-        <h4>@Convert.ToInt32(Model.Price)</h4>
+        <h4 style="color: red">@Convert.ToInt32(Model.Price) VND</h4>
+        <p><span style="font-weight: bold">Loại: </span>@Model.CategoryName</p>
+        <span style="font-weight:bold">Mô tả sản phẩm</span>
         <p>@Model.Description</p>
         <a href="@Url.Action("AddToCart", "Cart", new { productId = Model.ProductID, price = Model.Price })" class="btn btn-danger text-decoration-none text-white">+ Thêm vào giỏ hàng</a>
     </div>

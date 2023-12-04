@@ -4,47 +4,49 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model List<QuanAoTreEm.Models.CartItem>
-@section scripts {
-    <script>
-        $(document).ready(function () {
-            var quantityInput = $('#quantity');
-
-            $('#increase').on('click', function () {
-                var currentValue = parseInt(quantityInput.val(), 10);
-                quantityInput.val(currentValue + 1);
-            });
-
-            $('#decrease').on('click', function () {
-                var currentValue = parseInt(quantityInput.val(), 10);
-                if (currentValue > 1) {
-                    quantityInput.val(currentValue - 1);
-                }
-            });
-        });
-    </script>
-}
 
 
 <h2>Giỏ hàng</h2>
-<div class="d-flex flex-column container align-items-center">
+
+<div class="d-flex flex-column container align-items-center" style="gap: 15px; padding-top: 0">
     @foreach (var item in Model)
     {
 
-        <div class="row d-flex g-3 align-items-center" style="width: 100%;padding: 16px">
+        <div class="row d-flex g-3 align-items-center" style="width: 100%;padding: 16px; background-color: white; border-radius: 10px;margin-bottom: 15px">
+            <input value="@item.ProductID" type="hidden" name="ProductID" class="hidden-product-id" />
             <div class="col-1 me-3"><img style="width:80px; height: 80px; object-fit: cover" src="~/Content/Assets/Images/Product/@item.ImagePath" /></div>
             <div class="col-3 me-3">@item.ProductName</div>
             <div class="col-1 me-3">@Convert.ToInt32(item.Price)đ</div>
             <div class="col-3 me-3">
                 <div class="container">
                     <div class="input-group">
-                        <button class="btn btn-outline-secondary" style="border-radius: 0" type="button" id="decrease">-</button>
-                        <input type="text" class="form-control text-center" style="border-radius: 0" id="quantity" value="@item.Quantity" readonly>
-                        <button class="btn btn-outline-secondary" style="border-radius: 0" type="button" id="increase">+</button>
+                        <div class="button-group">
+                            <a href="@Url.Action("DecrementQuantity", "Cart", new { productId = item.ProductID })" class="decrement" style="cursor: pointer; text-decoration: none; font-weight: bold; user-select:none">-</a>
+                            <input type="text" class="input-value text-center" style="width: 50px; margin: 0 10px" value="@item.Quantity" readonly>
+                            <a href="@Url.Action("IncrementQuantity", "Cart", new { productId = item.ProductID })" class="increment" style="cursor: pointer; text-decoration: none; font-weight: bold; user-select: none">+</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-1 me-3 fw-bold" style="color: red">@item.GetPriceByQuantity()đ</div>
-            <div class="col-1 me-3"><a href="@Url.Action("DeleteItem", "Cart", new { productId = item.ProductID})"><i class="fa-solid fa-trash-can"></i></a></div>
+            <div class="col-1 me-3"><button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash-can"></i></button></div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xoá</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Xác nhận xoá?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                            <a href="@Url.Action("DeleteItem", "Cart", new { productId = item.ProductID })" class="btn btn-primary text-decoration-none">Xoá</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 </div>

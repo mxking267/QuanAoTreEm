@@ -86,5 +86,12 @@ namespace QuanAoTreEm.Models
             string sql = $"Delete From CartItems Where UserID = {UserID} AND ProductID = {ProductID}";
             db.ExecuteNonQuery(sql);
         }
+
+        public void Change(int productID, int userID, int quantity)
+        {
+            string updateQuery = $"UPDATE CartItems SET Quantity = Quantity + {quantity} WHERE ProductID = {productID} AND UserID = {userID}";
+            db.ExecuteNonQuery(updateQuery);
+
+        }
     }
 }

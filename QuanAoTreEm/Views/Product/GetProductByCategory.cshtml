@@ -9,26 +9,35 @@
     .flex-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        justify-content: flex-start; /* hoặc justify-content: space-around; */
+        gap: 20px;
     }
 
     .flex-item {
-        width: calc(20% - 8px);
+        width: calc(20%);
         margin-bottom: 16px;
         background-color: #ddd;
         padding: 8px;
     }
+
+    .clamp-text {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2; /* Số dòng tối đa */
+        max-height: 3em; /* Chiều cao tối đa tương đương với 3 dòng */
+    }
 </style>
 <h2>Category</h2>
-<div class="flex-container">
+<div class="flex-container bg-white" style="padding: 30px">
     @foreach (var item in Model)
     {
-        <a href="@Url.Action("Detail", "Product", new { productId = item.ProductID })" class="card flex-item text-decoration-none">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">@item.ProductName</h5>
-                <p class="card-text">@item.Description</p>
-                <span>@Convert.ToInt32(item.Price)đ</span>
+        <a href="@Url.Action("Detail", "Product", new { productId = item.ProductID })" class="card flex-item text-decoration-none bg-white">
+            <img style="height: 182px; width: 182px; object-fit:cover" src="~/Content/Assets/Images/Product/@item.ImagePath" class="card-img-top" alt="...">
+            <div class="card-body p-1">
+                <p class="card-title overflow-hidden clamp-text">@item.ProductName</p>
+                <span class="fw-bold">@Convert.ToInt32(item.Price)đ</span>
             </div>
         </a>
     }

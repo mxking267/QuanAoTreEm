@@ -20,7 +20,7 @@
         }
 
         i {
-            font-size: 24px;    
+            font-size: 24px;
         }
 
         .search-input {
@@ -38,7 +38,7 @@
 </head>
 <body>
     @*Navigation*@
-    <nav class="d-flex bg-white" style="width: 100%;height:56px; padding: 8px 0">
+    <nav class="d-flex" style="width: 100%;height:56px; padding: 8px 0">
         <div class="nav-content d-flex m-auto justify-content-between gap-5" style="width: 1440px;height: 40px">
             <a href="/Product/Index"><i class="fa-brands fa-digg"></i></a>
             <form class="d-flex" role="search">
@@ -46,22 +46,22 @@
                 <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
             <div class="d-flex align-items-center justify-content-between" style="width:100px">
-                <a class="text-decoration-none" href="/Cart/Index">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
-                <a class="text-decoration-none" href="/Account/Profile">
-                    <i class="fa-solid fa-circle-user"></i>
-                </a>
+                <div>
+                    @{Html.RenderAction("BadgeCart", "Cart");}
+                </div>
+                <div>
+                    @{Html.RenderAction("Avatar", "Account");}
+                </div>
             </div>
         </div>
     </nav>
-    <div class="d-flex m-auto row mt-3" style="width: 1440px">
+    <div class="d-flex m-auto row mt-3" style="width: 1440px; top: 64px">
         @*Categories*@
-            @Html.Action("Index", "Categories")
+        @Html.Action("Index", "Categories")
         @*Content*@
-        <div class="col bg-white" style="border-radius: 10px;">
+        <div class="col" style="border-radius: 10px;">
             @*Carousel*@
-            <div id="carouselExampleIndicators" class="carousel slide mb-3 mt-3 overflow-hidden" style="border-radius: 10px; height: 300px">
+            <div id="carouselExampleIndicators" class="carousel slide mb-3 mt-3 overflow-hidden carousel" data-bs-ride="carousel" style="border-radius: 10px; height: 300px">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -89,10 +89,10 @@
             </div>
 
             @*Body*@
-        <div>
-            @RenderBody()
-        </div>
-            
+            <div>
+                @RenderBody()
+            </div>
+
         </div>
 
     </div>

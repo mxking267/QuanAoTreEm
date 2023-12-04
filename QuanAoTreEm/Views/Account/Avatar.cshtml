@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Avatar</title>
+</head>
+<body>
+    <div>
+        <a class="text-decoration-none" href="/Account/Profile">
+            @if (ViewBag.UserImage != null)
+            {
+
+                <img style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;" src="~/Content/Assets/Images/Users/@ViewBag.UserImage" />
+            }
+            else
+            {
+                <i class="fa-solid fa-circle-user"></i>
+            }
+        </a>
+    </div>
+</body>
+</html>

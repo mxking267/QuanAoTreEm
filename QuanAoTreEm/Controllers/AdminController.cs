@@ -15,11 +15,18 @@ namespace QuanAoTreEm.Controllers
         // GET: Admin
         Product product;
         Category category;
+        Account account;
         public ActionResult Index()
         {
-            product = new Product();
-            List<Product> list = product.GetProducts();
-            return View(list);
+            account = new Account();    
+            int userId = Convert.ToInt32(Session["UserId"]);
+            if(account.getRole(userId) == "Admin")
+            {
+                product = new Product();
+                List<Product> list = product.GetProducts();
+                return View(list);
+            }
+            return new RedirectResult("/Error/AccessDenied");
         }
 
         public ActionResult ProductPartial(Product item)
@@ -109,6 +116,11 @@ namespace QuanAoTreEm.Controllers
             string imagePath = "/Content/Assets/Images/Product/" + Path.GetFileName(image.FileName);
             image.SaveAs(Server.MapPath(imagePath));
             return imagePath;
+        }
+
+        public ActionResult AccountManagement()
+        {
+            return View();
         }
     }
 }

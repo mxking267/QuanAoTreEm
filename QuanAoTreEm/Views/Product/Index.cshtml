@@ -26,7 +26,7 @@
         max-height: 3em; /* Chiều cao tối đa tương đương với 3 dòng */
     }
 </style>
-<div class="flex-container bg-white">
+<div class="flex-container">
     @foreach (var item in Model)
     {
         <a href="@Url.Action("Detail", "Product", new { productId = item.ProductID })" class="card flex-item text-decoration-none bg-white">

@@ -14,6 +14,7 @@ namespace QuanAoTreEm.Models
         public string ProductName { get; set; }
         public string Description { get; set; }
         public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
         public string ImagePath { get; set; }
@@ -34,7 +35,7 @@ namespace QuanAoTreEm.Models
             Price = price;
         }
 
-        public Product(int id, string productName, string description, int categoryID, decimal price)
+        public Product(int id, string productName, string description, int categoryID,  decimal price)
         {
             db = new Database();
             ProductID = id;
@@ -44,15 +45,26 @@ namespace QuanAoTreEm.Models
             Price = price;
         }
 
+        public Product(int id, string productName, string description, int categoryID,string categoryName , decimal price)
+        {
+            db = new Database();
+            ProductID = id;
+            ProductName = productName;
+            Description = description;
+            CategoryID = categoryID;
+            CategoryName = categoryName;
+            Price = price;
+        }
+
         public List<Product> GetProducts()
         {
-            string sql = "Select * From Product";
+            string sql = "Select * From Product, Categories Where Product.CategoryID = Categories.CategoryID";
             return ConvertDataTableToList(db.Execute(sql));
         }
 
         public Product GetProductByID(int? id)
         {
-            string sql = $"Select * From Product Where ProductID = " + id;
+            string sql = $"Select * From Product, Categories Where Product.CategoryID = Categories.CategoryID AND ProductID = " + id;
             DataTable dt = db.Execute(sql);
             DataRow row = dt.Rows[0];
             Product product = new Product()
@@ -61,6 +73,7 @@ namespace QuanAoTreEm.Models
                 ProductName = row["ProductName"].ToString(),
                 Description = row["Description"].ToString(),
                 CategoryID = Convert.ToInt32(row["CategoryID"].ToString()),
+                CategoryName = row["CategoryName"].ToString(),
                 Price = Convert.ToDecimal(row["Price"]),
             };
             return product;
@@ -112,6 +125,7 @@ namespace QuanAoTreEm.Models
                     ProductName = row["ProductName"].ToString(),
                     Description = row["Description"].ToString(),
                     CategoryID = Convert.ToInt32(row["CategoryID"].ToString()),
+                    CategoryName = row["CategoryName"].ToString(),
                     Price = Convert.ToDecimal(row["Price"]),
                     
                     // Thêm các trường khác nếu cần
