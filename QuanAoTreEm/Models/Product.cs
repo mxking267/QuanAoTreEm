@@ -110,7 +110,7 @@ namespace QuanAoTreEm.Models
 
         public List<Product> GetProductsByCategoyID(int categoryID)
         {
-            string sql = "Select * From Product Where CategoryID = " + categoryID;
+            string sql = "Select * From Product, Categories Where Product.CategoryID = Categories.CategoryID And Product.CategoryID = " + categoryID;
             return ConvertDataTableToList(db.Execute(sql));
         }
         public static List<Product> ConvertDataTableToList(DataTable dataTable)

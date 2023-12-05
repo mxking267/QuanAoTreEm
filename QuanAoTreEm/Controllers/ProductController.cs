@@ -13,7 +13,7 @@ namespace QuanAoTreEm.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        Product product;
+        Product product = new Product();
         public ActionResult Index()
         {
             product = new Product();
@@ -23,7 +23,6 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult GetProductByCategory(int categoryId)
         {
-            product = new Product();
             List<Product> productList = product.GetProductsByCategoyID(categoryId);
 
             return View(productList);
@@ -31,7 +30,6 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult Detail(int? productId)
         {
-            product = new Product();
             if (productId.HasValue)
             {
                 Product pr = product.GetProductByID(productId);

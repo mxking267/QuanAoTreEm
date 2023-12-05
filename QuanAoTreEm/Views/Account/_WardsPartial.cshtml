@@ -1,0 +1,15 @@
+﻿@model List<QuanAoTreEm.Models.ward>
+
+<label class="col-sm-2 col-form-label">Xã/ Phường</label>
+<div class="col-sm-10" id="wardsContainer">
+    <select class="form-control" id="ward" placeholder="Nhập để tìm kiếm" required name="ward">
+        @if (Model != null)
+        {
+            foreach (var ward in Model)
+            {
+                <option value="@ward.code">@ward.name</option>
+
+            }
+        }
+    </select>
+</div>

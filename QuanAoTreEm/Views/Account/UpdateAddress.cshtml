@@ -2,75 +2,89 @@
 @{
     ViewBag.Title = "UpdateAddress";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var provinces = ViewBag.provinces as List<QuanAoTreEm.Models.province>;
 }
-
+@model QuanAoTreEm.Models.AddressModel
 <h2>Cập nhật địa chỉ</h2>
-<form class="bg-white" style="border-radius: 15px; padding: 20px">
+
+<form action="@Url.Action("UpdateAddress", "Account", new { addressID = @Model.addressID })" method="post" class="bg-white" style="border-radius: 15px; padding: 20px">
     <div class="mb-3 row">
         <label for="fullname" class="col-sm-2 col-form-label">Họ và tên</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="fullname" placeholder="Họ và tên" required>
+            <input type="text" class="form-control" id="fullname" name="fullname" value="@Model.fullname" required>
         </div>
     </div>
     <div class="mb-3 row">
         <label for="phoneNumber" class="col-sm-2 col-form-label">Số điện thoại</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="phoneNumber" placeholder="Nhập số điện thoại" required>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="@Model.phoneNumber" required>
         </div>
     </div>
     <div class="mb-3 row">
         <label for="province" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
         <div class="col-sm-10">
-            <input class="form-control" list="provinceDatalist" id="province" placeholder="Nhập để tìm kiếm" required>
-            <datalist id="provinceDatalist">
-                <option value="San Francisco">
-                <option value="New York">
-                <option value="Seattle">
-                <option value="Los Angeles">
-                <option value="Chicago">
-            </datalist>
+            <select class="form-control" id="province" name="province" placeholder="Nhập để tìm kiếm" required onchange="loadDistricts()">
+                @foreach (var province in provinces)
+                {
+                    <option @(province.name == Model.province ? "selected" : "") value="@province.code">@province.name</option>
+                }
+            </select>
         </div>
     </div>
     <div class="mb-3 row">
-        <label for="district" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
-        <div class="col-sm-10">
-            <input class="form-control" list="districtDatalist" id="district" placeholder="Nhập để tìm kiếm" required>
-            <datalist id="districtDatalist">
-                <option value="San Francisco">
-                <option value="New York">
-                <option value="Seattle">
-                <option value="Los Angeles">
-                <option value="Chicago">
-            </datalist>
-        </div>
+        @Html.Action("GetDistricts", "Account")
     </div>
     <div class="mb-3 row">
-        <label for="ward" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
-        <div class="col-sm-10">
-            <input class="form-control" list="wardDatalist" id="ward" placeholder="Nhập để tìm kiếm" required>
-            <datalist id="wardDatalist">
-                <option value="San Francisco">
-                <option value="New York">
-                <option value="Seattle">
-                <option value="Los Angeles">
-                <option value="Chicago">
-            </datalist>
-        </div>
+        @Html.Action("GetWards", "Account")
     </div>
     <div class="mb-3 row">
         <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
         <div class="col-sm-10">
-            <textarea class="form-control" id="address" rows="3" placeholder="Nhập địa chỉ"></textarea>
+            <textarea class="form-control" id="address" rows="3" placeholder="Nhập địa chỉ" name="address">@Model.address</textarea>
         </div>
     </div>
     <div class="mb-3 row">
         <span style="visibility: hidden" class="col-sm-2"></span>
         <div class="col-sm-10">
-            <a class="btn btn-primary" style="text-decoration: none; color: white; padding: 5px 70px">Lưu</a>
+            <button type="submit" class="btn btn-primary" style="text-decoration: none; color: white; padding: 5px 70px">Lưu</button>
         </div>
     </div>
 
-
 </form>
+
+
+<script>
+    function loadDistricts() {
+        var locationCode = document.getElementById("province").value;
+        var districtsContainer = document.getElementById("district");
+        var districtDropdown = document.getElementById("district");
+
+        if (locationCode) {
+            // Load districts
+            fetch('/Account/GetDistricts?locationCode=' + locationCode)
+                .then(response => response.text())
+                .then(data => {
+                    districtsContainer.innerHTML = data;
+                    districtDropdown.removeAttribute('disabled');
+                });
+        }
+    }
+
+    function loadWards() {
+        var districtCode = document.getElementById("district").value;
+        var wardsContainer = document.getElementById("ward");
+        var wardDropdown = document.getElementById("ward");
+
+        if (districtCode) {
+            // Load wards
+            fetch('/Account/GetWards?districtCode=' + districtCode)
+                .then(response => response.text())
+                .then(data => {
+                    wardsContainer.innerHTML = data;
+                    wardDropdown.removeAttribute('disabled');
+                });
+        }
+    }
+</script>
 
 

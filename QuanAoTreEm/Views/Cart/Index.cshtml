@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 @model List<QuanAoTreEm.Models.CartItem>
 
@@ -11,7 +12,6 @@
     <div class="d-flex flex-column container align-items-center col-8" style="gap: 15px; padding-top: 0">
         @foreach (var item in Model)
         {
-
             <div class="d-flex g-3 align-items-center" style="width: 100%;padding: 16px; background-color: white; border-radius: 10px;margin-bottom: 15px">
                 <input value="@item.ProductID" type="hidden" name="ProductID" class="hidden-product-id" />
                 <div class="me-3"><img style="width:80px; height: 80px; object-fit: cover" src="~/Content/Assets/Images/Product/@item.ImagePath" /></div>
@@ -49,23 +49,14 @@
         }
     </div>
     <div class="col-4 d-flex flex-column" style="gap: 10px">
-        <div style="padding: 10px; border-radius: 10px; background: white">
-            <div class="d-flex justify-content-between">
-                <span style="color: #ccc">Giao tới</span>
-                <a style="text-decoration: none; color: blue">Thay đổi</a>
-            </div>
-            <div>
-                <p style="font-weight: bold; margin: 0"><span>Thanh Tân</span> | <span>0797899861</span></p>
-                <p>622/14 Cộng Hòa, Phường 13, Quận Tân Bình, Hồ Chí Minh</p>
-            </div>
-        </div>
+        @Html.Action("AddressPartial", "Cart")
         <div class="d-flex bg-white" style="padding: 10px; border-radius: 10px; justify-content: space-between">
             <span style="font-size: 20px;">Tổng tiền</span>
             <div>
-                <h5 style="color: red; font-size: 24px">143000đ</h5>
+                <h5 style="color: red; font-size: 24px">@ViewBag.Sum</h5>
                 <p style="color: #ccc">(Đã bao gồm VAT nếu có)</p>
             </div>
         </div>
-        <a class="btn btn-danger" style="text-decoration: none;padding: 10px; text-align: center; width: 100%">Đặt hàng</a>
+        <a id="orderLink" href="@Url.Action("Order", "Order", new {address= ""})" class="btn btn-danger" style="text-decoration: none;padding: 10px; text-align: center; width: 100%">Đặt hàng</a>
     </div>
 </div>

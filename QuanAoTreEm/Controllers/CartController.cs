@@ -11,17 +11,18 @@ namespace QuanAoTreEm.Controllers
     public class CartController : Controller
     {
         // GET: Cart
-        Cart cart;
+        Cart cart = new Cart();
         public ActionResult Index()
         {
             cart = new Cart();
             int? userId = Session["UserId"] as int?;
-
+            ViewBag.sum = 0;
             if (userId.HasValue)
             {
-
+                List<CartItem> items = cart.getCartItems(userId.Value);
+                ViewBag.sum = (int) items.Sum(item => item.Quantity *  item.Price);
                 // Redirect về trang chi tiết sản phẩm hoặc trang giỏ hàng
-                return View(cart.getCartItems(userId.Value));
+                return View(items);
             }
             else
             {
@@ -33,7 +34,6 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult AddToCart(int productID,decimal price)
         {
-            cart = new Cart();
             int? userId = Session["UserId"] as int?;
 
             if (userId.HasValue)
@@ -52,7 +52,6 @@ namespace QuanAoTreEm.Controllers
         }
         public ActionResult DeleteItem(int productID)
         {
-            cart = new Cart();
             int? userId = Session["UserId"] as int?;
             cart.DeleteCartItem(userId.Value, productID);
             return RedirectToAction("Index", "Cart");
@@ -66,7 +65,6 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult IncrementQuantity(int productId)
         {
-            cart = new Cart();
             // Xử lý tăng giá trị quantity trong database
             // Cập nhật giá trị mới trong database
             int userId =Convert.ToInt32(Session["UserId"]);
@@ -77,7 +75,6 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult DecrementQuantity(int productId)
         {
-            cart = new Cart();
             // Xử lý giảm giá trị quantity trong database
             // Cập nhật giá trị mới trong database
             int userId = Convert.ToInt32(Session["UserId"]);
@@ -90,10 +87,17 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult BadgeCart()
         {
-            cart = new Cart();
             int userId = Convert.ToInt32(Session["UserId"]);
             ViewBag.Count = cart.getCartItems(userId).Count;
             return View();
+        }
+
+        public ActionResult AddressPartial()
+        {
+            int userId = Convert.ToInt32(Session["UserId"]);
+            UserAddress address = new UserAddress();
+
+            return PartialView("_AddressPartial", address.getAddress(userId)); 
         }
     }
 }

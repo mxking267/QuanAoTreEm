@@ -158,6 +158,15 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Models\district.cs">
+      <DependentUpon>Address.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetails.cs" />
+    <Compile Include="Models\UserAddress.cs" />
+    <Compile Include="Models\ward.cs">
+      <DependentUpon>Address.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
@@ -179,21 +188,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Address.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\AddressDatabase.cs" />
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Database.cs" />
-    <Compile Include="Models\District.cs">
-      <DependentUpon>Address.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\province.cs">
-      <DependentUpon>Address.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Provinces.cs" />
-    <Compile Include="Models\Ward.cs">
       <DependentUpon>Address.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -308,6 +309,10 @@
     <Content Include="Views\Account\UpdateAddress.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
+    <Content Include="Views\Account\_DistrictsPartial.cshtml" />
+    <Content Include="Views\Account\_WardsPartial.cshtml" />
+    <Content Include="Views\Cart\_AddressPartial.cshtml" />
+    <Content Include="Views\Admin\AccountManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

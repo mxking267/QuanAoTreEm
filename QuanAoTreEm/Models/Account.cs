@@ -129,5 +129,98 @@ namespace QuanAoTreEm.Models
             string sql = $"Select Role From Account Where UserID = {userID}";
             return db.Execute(sql).Rows[0]["Role"].ToString();
         }
+
+        public void addAddress(int? userID, AddressModel model)
+        {
+            string sql = $"Insert Into UserAdress Values({userID},N'{model.address}', N'{model.ward}', N'{model.district}', N'{model.province}', N'{model.fullname}', '{model.phoneNumber}')";
+            db.ExecuteNonQuery(sql);
+        }
+
+        public List<AddressModel> getAddress(int? userID)
+        {
+            List<AddressModel> lst = new List<AddressModel>();
+            string sql = "Select * From UserAdress Where UserID = " + userID;
+            DataTable dt = db.Execute(sql);
+            foreach (DataRow dr in dt.Rows)
+            {
+                AddressModel model = new AddressModel()
+                {
+                    fullname = dr["FullName"].ToString(),
+                    phoneNumber = dr["PhoneNumber"].ToString(),
+                    address = dr["DiaChi"].ToString(),
+                    ward = dr["XaPhuong"].ToString(),
+                    district = dr["QuanHuyen"].ToString(),
+                    province = dr["TinhTP"].ToString(),
+                    addressID = int.Parse(dr["AddressID"].ToString())
+                };
+                lst.Add(model);
+            }
+            return lst;
+        }
+
+        public void deleteAddress(int? userID, int addressID)
+        {
+            string sql = $"Delete From UserAdress Where UserID = {userID} AND AddressID = {addressID}";
+            db.ExecuteNonQuery(sql);
+        }
+
+        public AddressModel getAddressByID(int? userID, int addressID)
+        {
+            string sql = "Select * From UserAdress Where UserID = " + userID + " AND AddressID =" + addressID;
+            DataRow dr = db.Execute(sql).Rows[0];
+
+            AddressModel model = new AddressModel()
+            {
+                fullname = dr["FullName"].ToString(),
+                phoneNumber = dr["PhoneNumber"].ToString(),
+                address = dr["DiaChi"].ToString(),
+                ward = dr["XaPhuong"].ToString(),
+                district = dr["QuanHuyen"].ToString(),
+                province = dr["TinhTP"].ToString(),
+                addressID = int.Parse(dr["AddressID"].ToString())
+            }; ;
+
+            return model;
+        }
+
+
+        public void updateAddress(int? addressID, AddressModel model)
+        {
+            string sql = "Update UserAdress" +
+                " Set FullName = N'" + model.fullname +
+                "', PhoneNumber = '" + model.phoneNumber +
+                "', DiaChi = N'" + model.address +
+                "', XaPhuong = N'" + model.ward +
+                "', QuanHuyen = N'" + model.district +
+                "', TinhTP = N'" + model.province +
+                "' Where AddressID = " + addressID;
+            db.ExecuteNonQuery(sql);
+        }
+
+        public List<Account> getListAccount()
+        {
+            string sql = "Select * from Account";
+            DataTable dt = db.Execute(sql);
+            List<Account> lst = new List<Account>();
+            foreach(DataRow dr in dt.Rows)
+            {
+                lst.Add(ConvertDataRowToAccount(dr));
+            }
+            return lst;
+        }
+
+        public static Account ConvertDataRowToAccount(DataRow row)
+        {
+            Account account = new Account()
+            {
+                UserID = int.Parse(row["UserID"].ToString()),
+                FullName = row["FullName"].ToString(),
+                Password = row["Password"].ToString(),
+                Username = row["Username"].ToString(),
+                Role = row["Role"].ToString()
+            };
+
+            return account;
+        }
     }
 }

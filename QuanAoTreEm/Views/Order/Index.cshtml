@@ -3,22 +3,30 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model List<QuanAoTreEm.Models.Order>
+
 <style>
-    .order-container:hover{
+    .order-container:hover {
         cursor: pointer;
     }
 </style>
 <h2>Đơn hàng của tôi</h2>
-<div class="d-flex flex-column order-container" style="border-radius: 10px; background: white; padding: 0 20px">
-    <span style="border-bottom: 1px solid #ccc; padding: 10px;">22/02/2002</span>
-    <div class="d-flex" style="gap: 30px; border-bottom: 1px solid #ccc; padding: 10px">
-        <img style="width: 80px; height: 80px; border-radius: 10px" />
-        <div class="flex-grow-1">
-            <h6>Thắt lưng dây nịt nam da bò khóa tự động phiên bản hàn đơn giản sành điệu trẻ trung DT107 - 106</h6>
-            <span>Dumbum</span>
-        </div>
-        <span><span>145.600</span>đ</span>
-    </div>
-    <p style="text-align: right; margin-top: 10px">Tổng tiền: <span>145.600</span>đ</p>
-</div>
+@foreach (var item in Model)
+{
+    <a href="@Url.Action("Details", "Order", new { orderID = item.orderID })" class="d-flex flex-column order-container" style="border-radius: 10px; background: white; padding: 0 20px; margin-bottom: 20px; text-decoration: none">
+        <span style="border-bottom: 1px solid #ccc; padding: 10px;">@item.orderDate</span>
+        @foreach (var order in item.orderList)
+        {
+            <div class="d-flex" style="gap: 30px; padding: 10px">
+                <img src="~/Content/Assets/Images/Product/@order.ImagePath" style="width: 80px; height: 80px; border-radius: 10px" />
+                <div class="flex-grow-1">
+                    <h6>@order.ProductName</h6>
+                </div>
+                <span><span>@order.Price</span>đ</span>
+            </div>
+        }
+
+        <p style="text-align: right; margin-top: 10px; border-top: 1px solid #ccc;">Tổng tiền: <span>@item.total</span>đ</p>
+    </a>
+}
 

@@ -1,0 +1,27 @@
+﻿@model List<QuanAoTreEm.Models.AddressModel>
+
+<div id="adress_carousel" class="carousel slide carousel-fade">
+    <div class="carousel-inner">
+        @foreach (var item in Model)
+        {
+            <div class="carousel-item active address" id="@item.addressID">
+                <div style="padding: 10px; border-radius: 10px; background: white">
+                    <div class="d-flex justify-content-between">
+                        <span style="color: #ccc">Giao tới</span>
+                        <button style="background: transparent; border: none" type="button" data-bs-target="#adress_carousel" data-bs-slide="next">
+                            <span style="color: blue" aria-hidden="true">Thay đổi</span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                    </div>
+                    <div>
+                        <p style="font-weight: bold; margin: 0"><span>@item.fullname</span> | <span>@item.phoneNumber</span></p>
+                        <p>@item.address, @item.ward, @item.district, @item.province</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+

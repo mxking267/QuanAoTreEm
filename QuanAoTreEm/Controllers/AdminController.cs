@@ -57,7 +57,6 @@ namespace QuanAoTreEm.Controllers
             {
                 if (image != null && image.ContentLength > 0)
                 {
-                    // Lưu trữ hoặc xử lý ảnh theo yêu cầu của bạn
                     string imagePath = SaveImage(image);
                     lstImages.Add(Path.GetFileName(image.FileName));
                 }
@@ -111,8 +110,6 @@ namespace QuanAoTreEm.Controllers
         private string SaveImage(HttpPostedFileBase image)
         {
             // Xử lý lưu trữ ảnh vào thư mục và trả về đường dẫn
-            // Đây là một phần của logic, bạn có thể điều chỉnh theo yêu cầu thực tế của bạn
-
             string imagePath = "/Content/Assets/Images/Product/" + Path.GetFileName(image.FileName);
             image.SaveAs(Server.MapPath(imagePath));
             return imagePath;
@@ -120,6 +117,14 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult AccountManagement()
         {
+            Account account = new Account();
+            return View(account.getListAccount());
+        }
+
+        public ActionResult OrderManagement()
+        {
+            Order order = new Order();
+            List<Order> lst = order.getFullOrder();
             return View();
         }
     }

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "AccountManagement";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@model List<QuanAoTreEm.Models.Account>
+<div class="d-flex flex-column" style="width: 100%">
+    <h2 style="padding: 20px 0;">Quản lí tài khoản</h2>
+    <div style="background: white; border-radius: 15px; height: 100vh; padding: 20px">
+        <div class="row w-100">
+            <h6 class="col-3">Họ và tên</h6>
+            <h6 class="col-3">Tên đăng nhập</h6>
+            <h6 class="col-3">Mật khẩu</h6>
+            <h6 class="col-3">Vai trò</h6>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="row w-100 align-items-center" style="padding: 15px 10px">
+                <span class="col-3">@item.FullName</span>
+                <span class="col-3">@item.Username</span>
+                <span class="col-3">@item.Password</span>
+                <span class="col-3">@item.Role</span>
+            </div>
+        }
+
+    </div>
+
+</div>

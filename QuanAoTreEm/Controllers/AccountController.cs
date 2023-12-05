@@ -13,7 +13,7 @@ namespace QuanAoTreEm.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        Account account;
+        Account account = new Account();
         private readonly VN_ProvincesEntities entities = new VN_ProvincesEntities();
         [HttpGet]
         public ActionResult SignUp()
@@ -50,7 +50,6 @@ namespace QuanAoTreEm.Controllers
                 fileName = Path.GetFileName(file.FileName);
             }
 
-            account = new Account();
             account.Username = username;
             account.Password = password;
             account.Email = email;
@@ -75,7 +74,6 @@ namespace QuanAoTreEm.Controllers
         [HttpPost]
         public ActionResult SignIn(FormCollection f)
         {
-            account = new Account();
             if (!string.IsNullOrEmpty(account.CheckSignIn(f["username"], f["password"])))
             {
                 Session["UserId"] = int.Parse(account.CheckSignIn(f["username"], f["password"]).ToString());
@@ -99,7 +97,6 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult Profile()
         {
-            account = new Account();
             int? userId = Session["UserId"] as int?;
             if (userId == null)
             {
@@ -112,7 +109,6 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult Avatar()
         {
-            account = new Account();
             int? userId = Session["UserId"] as int?;
             if (userId != null)
             {
@@ -130,8 +126,9 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult Address()
         {
-
-            return View();
+            int? userId = Session["UserId"] as int?;
+            var lst = account.getAddress(userId);
+            return View(lst);
         }
 
         [HttpGet]
@@ -141,10 +138,93 @@ namespace QuanAoTreEm.Controllers
             return View(provinces);
         }
 
-        [HttpGet]
-        public ActionResult UpdateAddress()
+        [HttpPost]
+        public ActionResult AddAddress(FormCollection f)
         {
-            return View();
+            string fullname = f["fullname"].ToString();
+            string phoneNumber = f["phoneNumber"].ToString();
+            string provinceCode = f["province"].ToString();
+            string province = entities.provinces.Where(x => x.code == provinceCode)
+    .Select(x => x.name).FirstOrDefault();
+            string districtCode = f["district"].ToString();
+            string district = entities.districts.Where(x => x.code == districtCode)
+    .Select(x => x.name).FirstOrDefault();
+            string wardCode = f["ward"].ToString();
+            string ward = entities.wards.Where(x => x.code == wardCode)
+    .Select(x => x.name).FirstOrDefault();
+            string address = f["address"].ToString();
+            AddressModel model = new AddressModel(fullname, phoneNumber, province, district, ward, address);
+            int? userId = Session["UserId"] as int?;
+            account.addAddress(userId, model);
+
+
+            return RedirectToAction("Address", "Account");
+
         }
+
+        [HttpGet]
+        public ActionResult UpdateAddress(int addressID)
+        {
+            int? userId = Session["UserId"] as int?;
+            var model = account.getAddressByID(userId, addressID);
+            ViewBag.provinces = entities.provinces.ToList();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateAddress(int? addressID, FormCollection f)
+        {
+            string fullname = f["fullname"].ToString();
+            string phoneNumber = f["phoneNumber"].ToString();
+            string provinceCode = f["province"].ToString();
+            string province = entities.provinces.Where(x => x.code == provinceCode)
+    .Select(x => x.name).FirstOrDefault();
+            string districtCode = f["district"].ToString();
+            string district = entities.districts.Where(x => x.code == districtCode)
+    .Select(x => x.name).FirstOrDefault();
+            string wardCode = f["ward"].ToString();
+            string ward = entities.wards.Where(x => x.code == wardCode)
+    .Select(x => x.name).FirstOrDefault();
+            string address = f["address"].ToString();
+            AddressModel model = new AddressModel(fullname, phoneNumber, province, district, ward, address);
+            account.updateAddress(addressID, model);
+            return RedirectToAction("Address", "Account");
+        }
+
+        public ActionResult DeleteAddress(int addressID)
+        {
+            int? userId = Session["UserId"] as int?;
+            account.deleteAddress(userId, addressID);
+            return RedirectToAction("Address", "Account");
+        }
+
+        [HttpGet]
+        public ActionResult GetDistricts(string locationCode)
+        {
+            if (locationCode != null)
+            {
+                var districts = entities.districts
+                .Where(d => d.province.code == locationCode)
+                .ToList();
+                return PartialView("_DistrictsPartial", districts);
+            }
+
+            return PartialView("_DistrictsPartial");
+
+        }
+
+        [HttpGet]
+        public ActionResult GetWards(string districtCode)
+        {
+            if (districtCode != null)
+            {
+                var wards = entities.wards
+                .Where(w => w.district.code == districtCode)
+                .ToList();
+                return PartialView("_WardsPartial", wards);
+            }
+            return PartialView("_WardsPartial");
+        }
+
     }
 }
