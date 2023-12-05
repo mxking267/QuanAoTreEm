@@ -3,7 +3,7 @@
     ViewBag.Title = "AddAddress";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model List<QuanAoTreEm.Models.province>
 <h2>Tạo sổ địa chỉ</h2>
 <form class="bg-white" style="border-radius: 15px; padding: 20px">
     <div class="mb-3 row">
@@ -23,11 +23,11 @@
         <div class="col-sm-10">
             <input class="form-control" list="provinceDatalist" id="province" placeholder="Nhập để tìm kiếm" required>
             <datalist id="provinceDatalist">
-                <option value="San Francisco">
-                <option value="New York">
-                <option value="Seattle">
-                <option value="Los Angeles">
-                <option value="Chicago">
+                @foreach (var province in Model)
+                {
+                    <option value="@province.code">@province.name</option>
+                }
+
             </datalist>
         </div>
     </div>
@@ -35,7 +35,7 @@
         <label for="district" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
         <div class="col-sm-10">
             <input class="form-control" list="districtDatalist" id="district" placeholder="Nhập để tìm kiếm" required>
-            <datalist id="districtDatalist">
+            <datalist id="districtDatalist" disabled>
                 <option value="San Francisco">
                 <option value="New York">
                 <option value="Seattle">
@@ -48,7 +48,7 @@
         <label for="ward" class="col-sm-2 col-form-label">Tỉnh/Thành phố</label>
         <div class="col-sm-10">
             <input class="form-control" list="wardDatalist" id="ward" placeholder="Nhập để tìm kiếm" required>
-            <datalist id="wardDatalist">
+            <datalist id="wardDatalist" disabled>
                 <option value="San Francisco">
                 <option value="New York">
                 <option value="Seattle">
@@ -69,7 +69,7 @@
             <a class="btn btn-primary" style="text-decoration: none; color: white; padding: 5px 70px">Lưu</a>
         </div>
     </div>
-    
+
 
 </form>
 

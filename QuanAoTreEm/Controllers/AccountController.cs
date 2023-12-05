@@ -14,6 +14,7 @@ namespace QuanAoTreEm.Controllers
     {
         // GET: Account
         Account account;
+        private readonly VN_ProvincesEntities entities = new VN_ProvincesEntities();
         [HttpGet]
         public ActionResult SignUp()
         {
@@ -129,13 +130,15 @@ namespace QuanAoTreEm.Controllers
 
         public ActionResult Address()
         {
+
             return View();
         }
 
         [HttpGet]
         public ActionResult AddAddress()
         {
-            return View();
+            var provinces = entities.provinces.ToList();
+            return View(provinces);
         }
 
         [HttpGet]

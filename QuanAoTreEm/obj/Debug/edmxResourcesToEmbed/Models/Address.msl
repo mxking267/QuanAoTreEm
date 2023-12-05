@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VN_ProvincesModelStoreContainer" CdmEntityContainer="VN_ProvincesEntities">
+    <EntitySetMapping Name="districts">
+      <EntityTypeMapping TypeName="VN_ProvincesModel.district">
+        <MappingFragment StoreEntitySet="districts">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="name_en" ColumnName="name_en" />
+          <ScalarProperty Name="full_name" ColumnName="full_name" />
+          <ScalarProperty Name="full_name_en" ColumnName="full_name_en" />
+          <ScalarProperty Name="code_name" ColumnName="code_name" />
+          <ScalarProperty Name="province_code" ColumnName="province_code" />
+          <ScalarProperty Name="administrative_unit_id" ColumnName="administrative_unit_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="provinces">
+      <EntityTypeMapping TypeName="VN_ProvincesModel.province">
+        <MappingFragment StoreEntitySet="provinces">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="name_en" ColumnName="name_en" />
+          <ScalarProperty Name="full_name" ColumnName="full_name" />
+          <ScalarProperty Name="full_name_en" ColumnName="full_name_en" />
+          <ScalarProperty Name="code_name" ColumnName="code_name" />
+          <ScalarProperty Name="administrative_unit_id" ColumnName="administrative_unit_id" />
+          <ScalarProperty Name="administrative_region_id" ColumnName="administrative_region_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="wards">
+      <EntityTypeMapping TypeName="VN_ProvincesModel.ward">
+        <MappingFragment StoreEntitySet="wards">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="name_en" ColumnName="name_en" />
+          <ScalarProperty Name="full_name" ColumnName="full_name" />
+          <ScalarProperty Name="full_name_en" ColumnName="full_name_en" />
+          <ScalarProperty Name="code_name" ColumnName="code_name" />
+          <ScalarProperty Name="district_code" ColumnName="district_code" />
+          <ScalarProperty Name="administrative_unit_id" ColumnName="administrative_unit_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

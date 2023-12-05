@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VN_ProvincesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="districts">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="name_en" Type="nvarchar" MaxLength="255" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="full_name_en" Type="nvarchar" MaxLength="255" />
+          <Property Name="code_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="province_code" Type="nvarchar" MaxLength="20" />
+          <Property Name="administrative_unit_id" Type="int" />
+        </EntityType>
+        <EntityType Name="provinces">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="name_en" Type="nvarchar" MaxLength="255" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="full_name_en" Type="nvarchar" MaxLength="255" />
+          <Property Name="code_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="administrative_unit_id" Type="int" />
+          <Property Name="administrative_region_id" Type="int" />
+        </EntityType>
+        <EntityType Name="wards">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="name_en" Type="nvarchar" MaxLength="255" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="full_name_en" Type="nvarchar" MaxLength="255" />
+          <Property Name="code_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="district_code" Type="nvarchar" MaxLength="20" />
+          <Property Name="administrative_unit_id" Type="int" />
+        </EntityType>
+        <Association Name="districts_province_code_fkey">
+          <End Role="provinces" Type="Self.provinces" Multiplicity="0..1" />
+          <End Role="districts" Type="Self.districts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="provinces">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="districts">
+              <PropertyRef Name="province_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="wards_district_code_fkey">
+          <End Role="districts" Type="Self.districts" Multiplicity="0..1" />
+          <End Role="wards" Type="Self.wards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="districts">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="wards">
+              <PropertyRef Name="district_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VN_ProvincesModelStoreContainer">
+          <EntitySet Name="districts" EntityType="Self.districts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="provinces" EntityType="Self.provinces" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="wards" EntityType="Self.wards" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="districts_province_code_fkey" Association="Self.districts_province_code_fkey">
+            <End Role="provinces" EntitySet="provinces" />
+            <End Role="districts" EntitySet="districts" />
+          </AssociationSet>
+          <AssociationSet Name="wards_district_code_fkey" Association="Self.wards_district_code_fkey">
+            <End Role="districts" EntitySet="districts" />
+            <End Role="wards" EntitySet="wards" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VN_ProvincesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="district">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name_en" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="full_name_en" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="code_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="province_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="administrative_unit_id" Type="Int32" />
+          <NavigationProperty Name="province" Relationship="Self.districts_province_code_fkey" FromRole="districts" ToRole="provinces" />
+          <NavigationProperty Name="wards" Relationship="Self.wards_district_code_fkey" FromRole="districts" ToRole="wards" />
+        </EntityType>
+        <EntityType Name="province">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name_en" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="full_name_en" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="code_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="administrative_unit_id" Type="Int32" />
+          <Property Name="administrative_region_id" Type="Int32" />
+          <NavigationProperty Name="districts" Relationship="Self.districts_province_code_fkey" FromRole="provinces" ToRole="districts" />
+        </EntityType>
+        <EntityType Name="ward">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name_en" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="full_name_en" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="code_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="district_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="administrative_unit_id" Type="Int32" />
+          <NavigationProperty Name="district" Relationship="Self.wards_district_code_fkey" FromRole="wards" ToRole="districts" />
+        </EntityType>
+        <Association Name="districts_province_code_fkey">
+          <End Role="provinces" Type="Self.province" Multiplicity="0..1" />
+          <End Role="districts" Type="Self.district" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="provinces">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="districts">
+              <PropertyRef Name="province_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="wards_district_code_fkey">
+          <End Role="districts" Type="Self.district" Multiplicity="0..1" />
+          <End Role="wards" Type="Self.ward" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="districts">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="wards">
+              <PropertyRef Name="district_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VN_ProvincesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="districts" EntityType="Self.district" />
+          <EntitySet Name="provinces" EntityType="Self.province" />
+          <EntitySet Name="wards" EntityType="Self.ward" />
+          <AssociationSet Name="districts_province_code_fkey" Association="Self.districts_province_code_fkey">
+            <End Role="provinces" EntitySet="provinces" />
+            <End Role="districts" EntitySet="districts" />
+          </AssociationSet>
+          <AssociationSet Name="wards_district_code_fkey" Association="Self.wards_district_code_fkey">
+            <End Role="districts" EntitySet="districts" />
+            <End Role="wards" EntitySet="wards" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VN_ProvincesModelStoreContainer" CdmEntityContainer="VN_ProvincesEntities">
+          <EntitySetMapping Name="districts">
+            <EntityTypeMapping TypeName="VN_ProvincesModel.district">
+              <MappingFragment StoreEntitySet="districts">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="name_en" ColumnName="name_en" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="full_name_en" ColumnName="full_name_en" />
+                <ScalarProperty Name="code_name" ColumnName="code_name" />
+                <ScalarProperty Name="province_code" ColumnName="province_code" />
+                <ScalarProperty Name="administrative_unit_id" ColumnName="administrative_unit_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="provinces">
+            <EntityTypeMapping TypeName="VN_ProvincesModel.province">
+              <MappingFragment StoreEntitySet="provinces">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="name_en" ColumnName="name_en" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="full_name_en" ColumnName="full_name_en" />
+                <ScalarProperty Name="code_name" ColumnName="code_name" />
+                <ScalarProperty Name="administrative_unit_id" ColumnName="administrative_unit_id" />
+                <ScalarProperty Name="administrative_region_id" ColumnName="administrative_region_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="wards">
+            <EntityTypeMapping TypeName="VN_ProvincesModel.ward">
+              <MappingFragment StoreEntitySet="wards">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="name_en" ColumnName="name_en" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="full_name_en" ColumnName="full_name_en" />
+                <ScalarProperty Name="code_name" ColumnName="code_name" />
+                <ScalarProperty Name="district_code" ColumnName="district_code" />
+                <ScalarProperty Name="administrative_unit_id" ColumnName="administrative_unit_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

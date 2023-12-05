@@ -29,11 +29,12 @@
 <div class="flex-container">
     @foreach (var item in Model)
     {
-        <a href="@Url.Action("Detail", "Product", new { productId = item.ProductID })" class="card flex-item text-decoration-none bg-white">
-            <img style="height: 182px; width: 182px; object-fit:cover" src="~/Content/Assets/Images/Product/@item.ImagePath" class="card-img-top" alt="...">
-            <div class="card-body p-1">
-                <p class="card-title overflow-hidden clamp-text">@item.ProductName</p>
-                <span class="fw-bold">@Convert.ToInt32(item.Price)đ</span>
+        <a href="@Url.Action("Detail", "Product", new { productId = item.ProductID })" class="card flex-item text-decoration-none bg-white p-0">
+            <img style="height: 182px; width: 100%; object-fit:cover" src="~/Content/Assets/Images/Product/@item.ImagePath" class="card-img-top" alt="...">
+            <div class="card-body d-flex flex-column" style="padding: 10px 20px">
+                <p class="card-title overflow-hidden clamp-text" style="font-size: 12px">@item.ProductName</p>
+                <span style="font-weight: bold; color: #ccc; font-size: 12px">@item.CategoryName</span>
+                <span class="fw-bold" style="color: red">@Convert.ToInt32(item.Price)đ</span>
             </div>
         </a>
     }

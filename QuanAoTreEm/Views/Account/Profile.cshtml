@@ -4,12 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container vh-100" style="background-color: #f5f5fa">
-    <h4 class="pt-5">Thông tin tài khoản</h4>
+<div class="vh-100" style="background-color: #f5f5fa">
+    <h4>Thông tin tài khoản</h4>
     <form class="form-control border-0" style="border-radius: 10px">
         <div class="row p-3">
-            <div class="col-3 border-end border-1 border-dark me-5 d-flex justify-content-center">
-                <img style="width: 150px; height: 150px; border-radius: 50%; object-fit:cover" src="~/Content/Assets/Images/Users/@Model.ProfileImage" />
+            <div class="col-3 border-end border-1 border-dark me-5 d-flex flex-column" style="gap: 15px">
+                <img style="width: 150px; height: 150px; border-radius: 50%; object-fit:cover; margin: 0 auto" src="~/Content/Assets/Images/Users/@Model.ProfileImage" />
+                <a href="@Url.Action("Address", "Account")" class="btn btn-primary">Đơn hàng của tôi</a>
+                <a class="btn btn-primary">Quản lí địa chỉ</a>
             </div>
             <div class="col" style="width: max-content">
                 @*Họ tên*@
